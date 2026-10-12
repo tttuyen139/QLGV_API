@@ -1,1 +1,1 @@
-# QLGV_API
+# QLGV-API-Django
