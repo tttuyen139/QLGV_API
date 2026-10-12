@@ -1,3 +1,1 @@
-from django.contrib import admin
-
-# Register your models here.
+# Mỗi app tự đăng ký model của mình trong admin.py riêng.

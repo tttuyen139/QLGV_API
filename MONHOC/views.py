@@ -1,3 +1,9 @@
-from django.shortcuts import render
+from app_quan_ly.responses import BaseListAPI
+from .models import MonHoc
+from .serializers import MonHocSerializer
 
-# Create your views here.
+
+class MonHocListAPI(BaseListAPI):
+    """Lấy danh sách môn học"""
+    queryset = MonHoc.objects.all()
+    serializer_class = MonHocSerializer

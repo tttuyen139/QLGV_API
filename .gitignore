@@ -218,3 +218,6 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# Cấu hình bí mật của project (xem config.example.ini)
+config.ini

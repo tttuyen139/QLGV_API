@@ -1,16 +1,31 @@
+import configparser
+import os
 from pathlib import Path
 
 # Thư mục gốc của project
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# Khóa bảo mật (Dùng cho môi trường phát triển)
-SECRET_KEY = 'django-insecure-qlgv-du-an-mon-hoc-ie221-nhom-api-key'
+# Cấu hình bí mật đọc từ biến môi trường, nếu không có thì đọc từ config.ini (không commit file này).
+# Xem config.example.ini để biết các khóa cần khai báo.
+_config = configparser.ConfigParser()
+_config.read(BASE_DIR / 'config.ini', encoding='utf-8')
 
-# Bật chế độ Debug
-DEBUG = True
 
-# Cho phép truy cập từ mọi host local
-ALLOWED_HOSTS = ['*']
+def _get(env_name, section, key, default=''):
+    return os.environ.get(env_name) or _config.get(section, key, fallback=default).strip()
+
+
+# Khóa bảo mật (giá trị mặc định chỉ dùng cho môi trường phát triển)
+SECRET_KEY = _get('DJANGO_SECRET_KEY', 'DJANGO', 'secret_key',
+                  'django-insecure-qlgv-du-an-mon-hoc-ie221-nhom-api-key')
+
+DEBUG = _get('DJANGO_DEBUG', 'DJANGO', 'debug', 'true').lower() in ('1', 'true', 'yes')
+
+ALLOWED_HOSTS = [h.strip() for h in _get('DJANGO_ALLOWED_HOSTS', 'DJANGO', 'allowed_hosts', '*').split(',')]
+
+# Trợ lý AI (Google Gemini)
+GEMINI_API_KEY = _get('GEMINI_API_KEY', 'GEMINI_API', 'api_key')
+GEMINI_MODEL = _get('GEMINI_MODEL', 'GEMINI_API', 'model', 'gemini-3.8-flash')
 
 # Các ứng dụng được cài đặt
 INSTALLED_APPS = [
@@ -21,9 +36,20 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    # Thư viện REST Framework và App Quản lý của nhóm
     'rest_framework',
+
+    # Phần dùng chung: tiện ích, Trợ lý AI, lệnh seed_data
     'app_quan_ly',
+
+    # Mỗi bảng CSDL là một app riêng
+    'KHOA',
+    'GIAOVIEN',
+    'MONHOC',
+    'DIEUKIEN',
+    'LOP',
+    'HOCVIEN',
+    'GIANGDAY',
+    'KETQUATHI',
 ]
 
 MIDDLEWARE = [

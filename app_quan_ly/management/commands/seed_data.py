@@ -1,11 +1,24 @@
-import os
-import django
-
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'qlgv_project.settings')
-django.setup()
-
 from django.contrib.auth.models import User
-from app_quan_ly.models import Khoa, GiaoVien, MonHoc, DieuKien, Lop, HocVien, GiangDay, KetQuaThi
+from django.core.management.base import BaseCommand
+from django.db import transaction
+
+from KHOA.models import Khoa
+from GIAOVIEN.models import GiaoVien
+from MONHOC.models import MonHoc
+from DIEUKIEN.models import DieuKien
+from LOP.models import Lop
+from HOCVIEN.models import HocVien
+from GIANGDAY.models import GiangDay
+from KETQUATHI.models import KetQuaThi
+
+
+class Command(BaseCommand):
+    help = "Nạp toàn bộ dữ liệu mẫu QLGV (chạy lại nhiều lần vẫn an toàn)"
+
+    def handle(self, *args, **options):
+        with transaction.atomic():
+            run_seed()
+
 
 def run_seed():
     print("🚀 Bắt đầu quá trình nạp 100% dữ liệu QLGV...")
@@ -253,6 +266,3 @@ def run_seed():
     ]
     print(f"📊 KIỂM TRA SỐ DÒNG: {counts} (Tổng cộng: {sum(counts)}/161 dòng)")
     print("🎉 HOÀN THÀNH 100% NẠP DỮ LIỆU!")
-
-if __name__ == '__main__':
-    run_seed()
