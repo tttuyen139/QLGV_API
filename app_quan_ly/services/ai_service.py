@@ -17,8 +17,8 @@ class AIService:
             genai.configure(api_key=settings.GEMINI_API_KEY)
 
             # xuất CSDL CONTEXT
-            ds_gv = list(GiaoVien.objects.values('ma_gv', 'ho_ten', 'hoc_vi', 'muc_luong', 'ma_khoa_id'))
-            ds_khoa = list(Khoa.objects.values('ma_khoa', 'ten_khoa'))
+            ds_gv = list(GiaoVien.objects.values('MAGV', 'HOTEN', 'HOCVI', 'MUCLUONG', 'MAKHOA_id'))
+            ds_khoa = list(Khoa.objects.values('MAKHOA', 'TENKHOA'))
 
             context = f"""
             Bạn là 'Trợ lý ảo Giáo vụ' của hệ thống QLGV.
@@ -36,5 +36,5 @@ class AIService:
             response = model.generate_content(f"{context}\n\nCâu hỏi: {cau_hoi}")
 
             return response.text.strip()
-        except Exception as e:
-            return f"Xin lỗi, Trợ lý AI đang bận. Chi tiết lỗi: {str(e)}"
+        except Exception:
+            return "Trợ lý AI tạm thời không khả dụng. Vui lòng thử lại sau."

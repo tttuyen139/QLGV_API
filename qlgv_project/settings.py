@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'rest_framework',
+    'AI',
 
     # Phần dùng chung: tiện ích, Trợ lý AI, lệnh seed_data
     'app_quan_ly',
@@ -86,7 +87,7 @@ WSGI_APPLICATION = 'qlgv_project.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'NAME': os.environ.get('QLGV_DB_PATH', str(BASE_DIR / 'db_chuan.sqlite3')),
     }
 }
 
@@ -102,7 +103,7 @@ AUTH_PASSWORD_VALIDATORS = [
 LANGUAGE_CODE = 'vi'
 TIME_ZONE = 'Asia/Ho_Chi_Minh'
 USE_I18N = True
-USE_TZ = True
+USE_TZ = False  # SMALLDATETIME trong SQL không có múi giờ.
 
 
 STATIC_URL = 'static/'
@@ -116,3 +117,20 @@ REST_FRAMEWORK = {
         'rest_framework.renderers.BrowsableAPIRenderer',
     ]
 }
+# 8 bảng BRD được tạo bằng SQL chuẩn, không chạy lại DDL lịch sử cũ.
+MIGRATION_MODULES = {name: name + '.canonical_migrations' for name in
+                     ['KHOA', 'GIAOVIEN', 'MONHOC', 'DIEUKIEN', 'LOP', 'HOCVIEN', 'GIANGDAY', 'KETQUATHI', 'app_quan_ly']}
+ANTHROPIC_API_KEY = os.environ.get('ANTHROPIC_API_KEY', '')
+AI_MODEL = os.environ.get('AI_MODEL', '')
+if os.environ.get('QLGV_DB_ENGINE') == 'mssql':
+    DATABASES['default'] = {
+        'ENGINE': 'mssql', 'NAME': os.environ.get('DB_NAME', 'QLGV'),
+        'HOST': os.environ.get('DB_HOST', 'localhost'),
+        'PORT': os.environ.get('DB_PORT', '1433'),
+        'USER': os.environ.get('DB_USER', ''), 'PASSWORD': os.environ.get('DB_PASSWORD', ''),
+        'OPTIONS': {'driver': os.environ.get('DB_DRIVER', 'ODBC Driver 18 for SQL Server'),
+                    'extra_params': os.environ.get('DB_EXTRA_PARAMS', 'TrustServerCertificate=yes')},
+    }
+
+MIGRATION_MODULES['AI'] = 'AI.canonical_migrations'
+TEST_RUNNER = 'app_quan_ly.test_runner.QLGVTestRunner'

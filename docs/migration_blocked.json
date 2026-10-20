@@ -1,0 +1,139 @@
+{
+  "blocked": [
+    {
+      "table": "DIEUKIEN",
+      "record": {
+        "MAMH": "PY1",
+        "MAMH_TRUOC": "PY1"
+      },
+      "reason": "CHECK constraint failed: CK_DK_KHACMON"
+    },
+    {
+      "table": "KETQUATHI",
+      "record": {
+        "MAHV": "123",
+        "MAMH": "PY1",
+        "LANTHI": 1,
+        "NGTHI": "2026-10-19 00:00:00",
+        "DIEM": 8,
+        "KQUA": "Pass"
+      },
+      "reason": "CHECK constraint failed: CK_KQT_KQUA"
+    }
+  ],
+  "source_rows_preserved": {
+    "KHOA": [
+      {
+        "MAKHOA": "CNTT",
+        "TENKHOA": "Công nghệ thông tin",
+        "NGTLAP": "2010-01-01 00:00:00",
+        "TRGKHOA": null
+      }
+    ],
+    "GIAOVIEN": [
+      {
+        "MAGV": "123",
+        "HOTEN": "Nguyen Van A",
+        "HOCVI": "Tiến Sĩ",
+        "HOCHAM": "PGS",
+        "GIOITINH": "Nam",
+        "NGSINH": "1980-10-15 00:00:00",
+        "NGVL": "2024-01-05 00:00:00",
+        "HESO": 2.4,
+        "MUCLUONG": 25000000,
+        "MAKHOA": "CNTT"
+      }
+    ],
+    "MONHOC": [
+      {
+        "MAMH": "PY1",
+        "TENMH": "Lập trình Python",
+        "TCLT": 3,
+        "TCTH": 1,
+        "MAKHOA": "CNTT"
+      }
+    ],
+    "DIEUKIEN": [
+      {
+        "MAMH": "PY1",
+        "MAMH_TRUOC": "PY1"
+      }
+    ],
+    "LOP": [
+      {
+        "MALOP": "IT1",
+        "TENLOP": "CN2_IT1",
+        "TRGLOP": null,
+        "SISO": 45,
+        "MAGVCN": "123"
+      }
+    ],
+    "HOCVIEN": [
+      {
+        "MAHV": "123",
+        "HO": "Le Thi",
+        "TEN": "B",
+        "NGSINH": "2000-01-01 00:00:00",
+        "GIOITINH": "Nữ",
+        "NOISINH": "HN",
+        "MALOP": "IT1"
+      }
+    ],
+    "GIANGDAY": [
+      {
+        "MALOP": "IT1",
+        "MAMH": "PY1",
+        "MAGV": "123",
+        "HOCKY": 1,
+        "NAM": 2026,
+        "TUNGAY": "2026-10-18 00:00:00",
+        "DENNGAY": "2026-10-24 00:00:00"
+      }
+    ],
+    "KETQUATHI": [
+      {
+        "MAHV": "123",
+        "MAMH": "PY1",
+        "LANTHI": 1,
+        "NGTHI": "2026-10-19 00:00:00",
+        "DIEM": 8,
+        "KQUA": "Pass"
+      }
+    ]
+  },
+  "legacy_id_mapping": {
+    "KHOA": [],
+    "GIAOVIEN": [],
+    "MONHOC": [],
+    "DIEUKIEN": [
+      {
+        "old_id": 1,
+        "new_key": {
+          "MAMH": "PY1",
+          "MAMH_TRUOC": "PY1"
+        }
+      }
+    ],
+    "LOP": [],
+    "HOCVIEN": [],
+    "GIANGDAY": [
+      {
+        "old_id": 1,
+        "new_key": {
+          "MALOP": "IT1",
+          "MAMH": "PY1"
+        }
+      }
+    ],
+    "KETQUATHI": [
+      {
+        "old_id": 1,
+        "new_key": {
+          "MAHV": "123",
+          "MAMH": "PY1",
+          "LANTHI": 1
+        }
+      }
+    ]
+  }
+}

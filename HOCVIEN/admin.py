@@ -5,6 +5,13 @@ from .models import HocVien
 
 @admin.register(HocVien)
 class HocVienAdmin(admin.ModelAdmin):
-    list_display = ('ma_hv', 'ho', 'ten', 'ngay_sinh', 'gioi_tinh', 'noi_sinh', 'ma_lop')
-    list_filter = ('ma_lop', 'gioi_tinh')
-    search_fields = ('ma_hv', 'ho', 'ten')
+    list_display = ('MAHV', 'HO', 'TEN', 'NGSINH', 'GIOITINH', 'NOISINH', 'MALOP')
+    list_filter = ('MALOP', 'GIOITINH')
+    search_fields = ('MAHV', 'HO', 'TEN')
+
+    def has_add_permission(self, request):
+        return False
+    def has_change_permission(self, request, obj=None):
+        return False
+    def has_delete_permission(self, request, obj=None):
+        return False

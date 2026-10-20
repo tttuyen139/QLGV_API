@@ -1,9 +1,9 @@
 from rest_framework import serializers
-
+from app_quan_ly.validation import SQLSerializer
 from .models import MonHoc
 
 
-class MonHocSerializer(serializers.ModelSerializer):
+class MonHocSerializer(SQLSerializer):
     class Meta:
         model = MonHoc
-        fields = '__all__'
+        fields = ['MAMH', 'TENMH', 'TCLT', 'TCTH', 'MAKHOA']

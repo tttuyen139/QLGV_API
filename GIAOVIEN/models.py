@@ -1,20 +1,22 @@
 from django.db import models
+from app_quan_ly.fields import SQLCharField, SQLVarCharField, SmallDateTimeField, MoneyField
 
 
 class GiaoVien(models.Model):
-    ma_gv = models.CharField(max_length=4, primary_key=True)
-    ho_ten = models.CharField(max_length=40)
-    hoc_vi = models.CharField(max_length=10)
-    hoc_ham = models.CharField(max_length=10, null=True, blank=True)
-    gioi_tinh = models.CharField(max_length=3)
-    ngay_sinh = models.DateField()
-    ngay_vao_lam = models.DateField()
-    he_so = models.DecimalField(max_digits=4, decimal_places=2)
-    muc_luong = models.DecimalField(max_digits=15, decimal_places=0)
-    ma_khoa = models.ForeignKey('KHOA.Khoa', on_delete=models.CASCADE, related_name='danh_sach_gv')
+    MAGV = SQLCharField(max_length=4, db_column='MAGV', primary_key=True)
+    HOTEN = models.CharField(max_length=40, db_column='HOTEN')
+    HOCVI = models.CharField(max_length=10, db_column='HOCVI')
+    HOCHAM = models.CharField(max_length=10, db_column='HOCHAM', null=True, blank=True)
+    GIOITINH = models.CharField(max_length=3, db_column='GIOITINH')
+    NGSINH = SmallDateTimeField(db_column='NGSINH')
+    NGVL = SmallDateTimeField(db_column='NGVL')
+    HESO = models.DecimalField(max_digits=4, decimal_places=2, db_column='HESO')
+    MUCLUONG = MoneyField(db_column='MUCLUONG')
+    MAKHOA = models.ForeignKey('KHOA.Khoa', on_delete=models.PROTECT, db_column='MAKHOA', related_name='danh_sach_gv')
 
     class Meta:
         db_table = 'GIAOVIEN'
+        managed = False  # SQL chuẩn sở hữu DDL; Django không ALTER 8 bảng BRD.
 
     def __str__(self):
-        return f"{self.ma_gv} - {self.ho_ten}"
+        return str(self.pk)

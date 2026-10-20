@@ -19,4 +19,4 @@ class KetQuaThiServiceTest(SeedDataMixin, TestCase):
 
 class KetQuaThiApiTest(SeedDataMixin, TestCase):
     def test_diem_tb_404(self):
-        self.assertEqual(APIClient().get('/api/hocvien/XXXXX/diem-tb/').status_code, 404)
+        self.assertEqual(APIClient().get('/api/hocvien/XXXXX/DIEM-tb/').status_code, 404)

@@ -1,15 +1,17 @@
 from django.db import models
+from app_quan_ly.fields import SQLCharField, SQLVarCharField, SmallDateTimeField, MoneyField, SQLTinyIntField
 
 
 class MonHoc(models.Model):
-    ma_mh = models.CharField(max_length=10, primary_key=True)
-    ten_mh = models.CharField(max_length=40)
-    tin_chi_lt = models.IntegerField()
-    tin_chi_th = models.IntegerField()
-    ma_khoa = models.ForeignKey('KHOA.Khoa', on_delete=models.CASCADE, related_name='danh_sach_mon')
+    MAMH = SQLVarCharField(max_length=10, db_column='MAMH', primary_key=True)
+    TENMH = models.CharField(max_length=40, db_column='TENMH')
+    TCLT = SQLTinyIntField(db_column='TCLT')
+    TCTH = SQLTinyIntField(db_column='TCTH')
+    MAKHOA = models.ForeignKey('KHOA.Khoa', on_delete=models.PROTECT, db_column='MAKHOA', related_name='danh_sach_mon')
 
     class Meta:
         db_table = 'MONHOC'
+        managed = False  # SQL chuẩn sở hữu DDL; Django không ALTER 8 bảng BRD.
 
     def __str__(self):
-        return self.ten_mh
+        return str(self.pk)

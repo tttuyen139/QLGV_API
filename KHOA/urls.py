@@ -1,7 +1,8 @@
 from django.urls import path
 
-from .views import QuyLuongKhoaAPI
+from .views import KhoaListAPI, QuyLuongKhoaAPI
 
 urlpatterns = [
-    path('api/khoa/<str:ma_khoa>/quy-luong/', QuyLuongKhoaAPI.as_view(), name='quy_luong'),
+    path('api/khoa/<str:MAKHOA>/quy-luong/', QuyLuongKhoaAPI.as_view(), name='quy_luong_khoa'),
+    path('api/khoa/', KhoaListAPI.as_view(), name='api_khoa'),
 ]

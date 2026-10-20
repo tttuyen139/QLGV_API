@@ -1,14 +1,19 @@
 from django.db import models
+from app_quan_ly.fields import SQLCharField, SQLVarCharField, SmallDateTimeField, MoneyField, SQLTinyIntField
 
 
 class KetQuaThi(models.Model):
-    ma_hv = models.ForeignKey('HOCVIEN.HocVien', on_delete=models.CASCADE, related_name='ket_qua_thi')
-    ma_mh = models.ForeignKey('MONHOC.MonHoc', on_delete=models.CASCADE)
-    lan_thi = models.IntegerField()
-    ngay_thi = models.DateField()
-    diem = models.DecimalField(max_digits=4, decimal_places=2)
-    ket_qua = models.CharField(max_length=10)
+    pk = models.CompositePrimaryKey('MAHV', 'MAMH', 'LANTHI')
+    MAHV = models.ForeignKey('HOCVIEN.HocVien', on_delete=models.PROTECT, db_column='MAHV', related_name='ket_qua_thi')
+    MAMH = models.ForeignKey('MONHOC.MonHoc', on_delete=models.PROTECT, db_column='MAMH')
+    LANTHI = SQLTinyIntField(db_column='LANTHI')
+    NGTHI = SmallDateTimeField(db_column='NGTHI')
+    DIEM = models.DecimalField(max_digits=4, decimal_places=2, db_column='DIEM')
+    KQUA = models.CharField(max_length=10, db_column='KQUA')
 
     class Meta:
         db_table = 'KETQUATHI'
-        unique_together = ('ma_hv', 'ma_mh', 'lan_thi')
+        managed = False  # SQL chuẩn sở hữu DDL; Django không ALTER 8 bảng BRD.
+
+    def __str__(self):
+        return str(self.pk)

@@ -5,6 +5,13 @@ from .models import MonHoc
 
 @admin.register(MonHoc)
 class MonHocAdmin(admin.ModelAdmin):
-    list_display = ('ma_mh', 'ten_mh', 'tin_chi_lt', 'tin_chi_th', 'ma_khoa')
-    list_filter = ('ma_khoa',)
-    search_fields = ('ma_mh', 'ten_mh')
+    list_display = ('MAMH', 'TENMH', 'TCLT', 'TCTH', 'MAKHOA')
+    list_filter = ('MAKHOA',)
+    search_fields = ('MAMH', 'TENMH')
+
+    def has_add_permission(self, request):
+        return False
+    def has_change_permission(self, request, obj=None):
+        return False
+    def has_delete_permission(self, request, obj=None):
+        return False

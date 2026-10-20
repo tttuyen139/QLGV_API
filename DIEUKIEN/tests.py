@@ -24,4 +24,4 @@ class DieuKienApiTest(SeedDataMixin, TestCase):
     def test_kiem_tra_dieu_kien(self):
         res = APIClient().get('/api/hocvien/K1101/kiem-tra-dieu-kien/CSDL/')
         self.assertEqual(res.status_code, 200)
-        self.assertTrue(res.json()['ket_qua']['du_dieu_kien'])
+        self.assertTrue(res.json()['KQUA']['du_dieu_kien'])

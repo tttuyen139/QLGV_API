@@ -5,4 +5,11 @@ from .models import Lop
 
 @admin.register(Lop)
 class LopAdmin(admin.ModelAdmin):
-    list_display = ('ma_lop', 'ten_lop', 'si_so', 'truong_lop', 'ma_gvcn')
+    list_display = ('MALOP', 'TENLOP', 'SISO', 'MAGVCN')
+
+    def has_add_permission(self, request):
+        return False
+    def has_change_permission(self, request, obj=None):
+        return False
+    def has_delete_permission(self, request, obj=None):
+        return False

@@ -1,17 +1,19 @@
 from django.db import models
+from app_quan_ly.fields import SQLCharField, SQLVarCharField, SmallDateTimeField, MoneyField
 
 
 class HocVien(models.Model):
-    ma_hv = models.CharField(max_length=5, primary_key=True)
-    ho = models.CharField(max_length=40)
-    ten = models.CharField(max_length=10)
-    ngay_sinh = models.DateField()
-    gioi_tinh = models.CharField(max_length=3)
-    noi_sinh = models.CharField(max_length=40)
-    ma_lop = models.ForeignKey('LOP.Lop', on_delete=models.CASCADE, related_name='danh_sach_hv')
+    MAHV = SQLCharField(max_length=5, db_column='MAHV', primary_key=True)
+    HO = models.CharField(max_length=40, db_column='HO')
+    TEN = models.CharField(max_length=10, db_column='TEN')
+    NGSINH = SmallDateTimeField(db_column='NGSINH')
+    GIOITINH = models.CharField(max_length=3, db_column='GIOITINH')
+    NOISINH = models.CharField(max_length=40, db_column='NOISINH')
+    MALOP = models.ForeignKey('LOP.Lop', on_delete=models.PROTECT, db_column='MALOP', related_name='danh_sach_hv')
 
     class Meta:
         db_table = 'HOCVIEN'
+        managed = False  # SQL chuẩn sở hữu DDL; Django không ALTER 8 bảng BRD.
 
     def __str__(self):
-        return f"{self.ho} {self.ten} ({self.ma_hv})"
+        return str(self.pk)

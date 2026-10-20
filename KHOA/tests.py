@@ -9,7 +9,7 @@ class KhoaServiceTest(SeedDataMixin, TestCase):
     def test_quy_luong_khoa(self):
         res = KhoaService.tinh_quy_luong_khoa('KHMT')
         self.assertEqual(res['so_luong_giao_vien'], 5)
-        self.assertEqual(res['tong_quy_luong'], 8185500)
+        self.assertEqual(res['tong_quy_luong'], '8185500.0000')
         self.assertEqual(res['tong_quy_luong_vnd'], "8.185.500 VNĐ")
 
     def test_quy_luong_khoa_khong_ton_tai(self):

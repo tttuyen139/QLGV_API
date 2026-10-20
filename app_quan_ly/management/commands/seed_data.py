@@ -21,6 +21,9 @@ class Command(BaseCommand):
 
 
 def run_seed():
+    from django.core.management.base import CommandError
+    if any(m.objects.exists() for m in [Khoa, GiaoVien, MonHoc, DieuKien, Lop, HocVien, GiangDay, KetQuaThi]):
+        raise CommandError("Chỉ seed khi cả 8 bảng trống; không ghi đè dữ liệu hiện có.")
     print("🚀 Bắt đầu quá trình nạp 100% dữ liệu QLGV...")
 
     # 2 tk test.
@@ -39,7 +42,7 @@ def run_seed():
         ('KTMT', 'Kỹ thuật máy tính', '2005-12-20'),
     ]
     for mk, tk, ng in khoa_data:
-        Khoa.objects.update_or_create(ma_khoa=mk, defaults={'ten_khoa': tk, 'ngay_thanh_lap': ng})
+        Khoa.objects.update_or_create(MAKHOA=mk, defaults={'TENKHOA': tk, 'NGTLAP': ng})
 
     #Bảng GIAOVIEN (15 dòng)
     gv_data = [
@@ -61,16 +64,16 @@ def run_seed():
     ]
     for mgv, ht, hv, hh, gt, ns, nvl, hs, ml, mk in gv_data:
         GiaoVien.objects.update_or_create(
-            ma_gv=mgv,
-            defaults={'ho_ten': ht, 'hoc_vi': hv, 'hoc_ham': hh, 'gioi_tinh': gt, 'ngay_sinh': ns,
-                      'ngay_vao_lam': nvl, 'he_so': hs, 'muc_luong': ml, 'ma_khoa_id': mk}
+            MAGV=mgv,
+            defaults={'HOTEN': ht, 'HOCVI': hv, 'HOCHAM': hh, 'GIOITINH': gt, 'NGSINH': ns,
+                      'NGVL': nvl, 'HESO': hs, 'MUCLUONG': ml, 'MAKHOA_id': mk}
         )
 
     # Cập nhật Trưởng khoa
-    Khoa.objects.filter(ma_khoa='KHMT').update(truong_khoa_id='GV01')
-    Khoa.objects.filter(ma_khoa='HTTT').update(truong_khoa_id='GV02')
-    Khoa.objects.filter(ma_khoa='CNPM').update(truong_khoa_id='GV04')
-    Khoa.objects.filter(ma_khoa='MTT').update(truong_khoa_id='GV03')
+    Khoa.objects.filter(MAKHOA='KHMT').update(TRGKHOA_id='GV01')
+    Khoa.objects.filter(MAKHOA='HTTT').update(TRGKHOA_id='GV02')
+    Khoa.objects.filter(MAKHOA='CNPM').update(TRGKHOA_id='GV04')
+    Khoa.objects.filter(MAKHOA='MTT').update(TRGKHOA_id='GV03')
 
     #Bảng MONHOC (13 dòng)
     monhoc_data = [
@@ -90,7 +93,7 @@ def run_seed():
     ]
     for mmh, tmh, tclt, tcth, mk in monhoc_data:
         MonHoc.objects.update_or_create(
-            ma_mh=mmh, defaults={'ten_mh': tmh, 'tin_chi_lt': tclt, 'tin_chi_th': tcth, 'ma_khoa_id': mk}
+            MAMH=mmh, defaults={'TENMH': tmh, 'TCLT': tclt, 'TCTH': tcth, 'MAKHOA_id': mk}
         )
 
     #Bảng DIEUKIEN (8 dòng)
@@ -99,7 +102,7 @@ def run_seed():
         ('PTTKTT', 'CTDLGT'), ('DHMT', 'THDC'), ('LTHDT', 'THDC'), ('PTTKHTTT', 'CSDL'),
     ]
     for mmh, mmh_t in dieukien_data:
-        DieuKien.objects.get_or_create(ma_mh_id=mmh, ma_mh_truoc_id=mmh_t)
+        DieuKien.objects.get_or_create(MAMH_id=mmh, MAMH_TRUOC_id=mmh_t)
 
     #Bảng LOP (3 dòng)
     lop_data = [
@@ -108,7 +111,7 @@ def run_seed():
         ('K13', 'Lớp 3 khóa 1', 12, 'GV14'),
     ]
     for ml, tl, ss, gvcn in lop_data:
-        Lop.objects.update_or_create(ma_lop=ml, defaults={'ten_lop': tl, 'si_so': ss, 'ma_gvcn_id': gvcn})
+        Lop.objects.update_or_create(MALOP=ml, defaults={'TENLOP': tl, 'SISO': ss, 'MAGVCN_id': gvcn})
 
     #Bảng HOCVIEN (35 dòng)
     hocvien_data = [
@@ -148,15 +151,15 @@ def run_seed():
         ('K1311', 'Trần Minh', 'Thức', '1986-04-04', 'Nam', 'TP. Hồ Chí Minh', 'K13'),
         ('K1312', 'Nguyễn Thị Kim', 'Yến', '1986-09-07', 'Nữ', 'TP. Hồ Chí Minh', 'K13'),
     ]
-    for mhv, ho, ten, ns, gt, nois, ml in hocvien_data:
+    for mhv, HO, TEN, ns, gt, nois, ml in hocvien_data:
         HocVien.objects.update_or_create(
-            ma_hv=mhv, defaults={'ho': ho, 'ten': ten, 'ngay_sinh': ns, 'gioi_tinh': gt, 'noi_sinh': nois, 'ma_lop_id': ml}
+            MAHV=mhv, defaults={'HO': HO, 'TEN': TEN, 'NGSINH': ns, 'GIOITINH': gt, 'NOISINH': nois, 'MALOP_id': ml}
         )
 
     # Cập nhật Lớp trưởng
-    Lop.objects.filter(ma_lop='K11').update(truong_lop_id='K1108')
-    Lop.objects.filter(ma_lop='K12').update(truong_lop_id='K1205')
-    Lop.objects.filter(ma_lop='K13').update(truong_lop_id='K1305')
+    Lop.objects.filter(MALOP='K11').update(TRGLOP_id='K1108')
+    Lop.objects.filter(MALOP='K12').update(TRGLOP_id='K1205')
+    Lop.objects.filter(MALOP='K13').update(TRGLOP_id='K1305')
 
     #Bảng GIANGDAY (16 dòng)
     giangday_data = [
@@ -177,10 +180,10 @@ def run_seed():
         ('K12', 'HDH', 'GV04', 1, 2007, '2007-01-02', '2007-03-20'),
         ('K11', 'DHMT', 'GV07', 1, 2007, '2007-02-18', '2007-03-20'),
     ]
-    for ml, mmh, mgv, hk, nam, tn, dn in giangday_data:
+    for ml, mmh, mgv, hk, NAM, tn, dn in giangday_data:
         GiangDay.objects.update_or_create(
-            ma_lop_id=ml, ma_mh_id=mmh,
-            defaults={'ma_gv_id': mgv, 'hoc_ky': hk, 'nam': nam, 'tu_ngay': tn, 'den_ngay': dn}
+            MALOP_id=ml, MAMH_id=mmh,
+            defaults={'MAGV_id': mgv, 'HOCKY': hk, 'NAM': NAM, 'TUNGAY': tn, 'DENNGAY': dn}
         )
 
     # Bảng KETQUATHI (66 dòng)
@@ -254,9 +257,12 @@ def run_seed():
     ]
     for mhv, mmh, lt, nt, d, kq in ketquathi_data:
         KetQuaThi.objects.update_or_create(
-            ma_hv_id=mhv, ma_mh_id=mmh, lan_thi=lt,
-            defaults={'ngay_thi': nt, 'diem': d, 'ket_qua': kq}
+            MAHV_id=mhv, MAMH_id=mmh, LANTHI=lt,
+            defaults={'NGTHI': nt, 'DIEM': d, 'KQUA': kq}
         )
+
+    for ml, hv in [('K11', 'K1108'), ('K12', 'K1205'), ('K13', 'K1305')]:
+        Lop.objects.filter(MALOP=ml).update(TRGLOP_id=hv)
 
     # kiểm tra tổng số dòng
     counts = [

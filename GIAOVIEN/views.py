@@ -5,5 +5,5 @@ from .serializers import GiaoVienSerializer
 
 class GiaoVienListAPI(BaseListAPI):
     """Lấy danh sách giáo viên kèm tiền lương VNĐ"""
-    queryset = GiaoVien.objects.select_related('ma_khoa')
+    queryset = GiaoVien.objects.select_related('MAKHOA')
     serializer_class = GiaoVienSerializer

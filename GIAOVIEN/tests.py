@@ -12,6 +12,6 @@ class GiaoVienApiTest(SeedDataMixin, TestCase):
 
     def test_giaovien_co_luong_vnd(self):
         data = APIClient().get('/api/giaovien/').json()['data']
-        gv01 = next(gv for gv in data if gv['ma_gv'] == 'GV01')
+        gv01 = next(gv for gv in data if gv['MAGV'] == 'GV01')
         self.assertEqual(gv01['muc_luong_vnd'], "2.250.000 VNĐ")
-        self.assertEqual(gv01['ten_khoa'], "Khoa học máy tính")
+        self.assertEqual(gv01['TENKHOA'], "Khoa học máy tính")
