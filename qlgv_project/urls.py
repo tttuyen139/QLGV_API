@@ -14,3 +14,8 @@ urlpatterns = [
     path('', include('KETQUATHI.urls')),
     path('', include('app_quan_ly.urls')),
 ]
+
+# Tùy chỉnh tiêu đề trang Quản trị Admin cho chuyên nghiệp (xóa chữ "Site quản trị hệ thống.")
+admin.site.site_header = "HỆ THỐNG QUẢN LÝ GIÁO VỤ"
+admin.site.site_title = "Quản Lý Giáo Vụ"
+admin.site.index_title = "Bảng Điều Khiển Quản Trị Hệ Thống"

@@ -12,6 +12,8 @@ class MonHoc(models.Model):
     class Meta:
         db_table = 'MONHOC'
         managed = False  # SQL chuẩn sở hữu DDL; Django không ALTER 8 bảng BRD.
+        verbose_name = 'Môn học'
+        verbose_name_plural = 'Danh sách môn học'
 
     def __str__(self):
         return str(self.pk)

@@ -14,6 +14,8 @@ class HocVien(models.Model):
     class Meta:
         db_table = 'HOCVIEN'
         managed = False  # SQL chuẩn sở hữu DDL; Django không ALTER 8 bảng BRD.
+        verbose_name = 'Học viên'
+        verbose_name_plural = 'Danh sách học viên'
 
     def __str__(self):
         return str(self.pk)

@@ -4,4 +4,4 @@ from django.apps import AppConfig
 class AIConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
     name = 'AI'
-    verbose_name = 'HỖ TRỢ AI'
+    verbose_name = 'QUẢN LÝ THỜI KHÓA BIỂU & HỌC PHẦN'
