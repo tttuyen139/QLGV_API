@@ -3,4 +3,4 @@ djangorestframework==3.18.3
 ortools==9.15.6755
 anthropic==1.15.0
 # SQL Server: pip install -r requirements-sqlserver.txt
-# Gemini chatbot cũ: pip install google-generativeai (tùy chọn)
+google-genai>=1.0.0
