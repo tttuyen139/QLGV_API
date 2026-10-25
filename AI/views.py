@@ -24,6 +24,13 @@ def _hv(user):
 
 
 class PhongViewSet(viewsets.ModelViewSet):
+    """
+    HỆ THỐNG QUẢN LÝ ĐÀO TẠO - DANH MỤC CƠ SỞ VẬT CHẤT
+    Chức năng: Quản lý danh sách phòng học lý thuyết và thực hành, kiểm soát sức chứa.
+    """
+    def get_view_name(self):
+        return "Danh Mục Phòng Học"
+
     queryset = Phong.objects.all()
     serializer_class = PhongSerializer
     permission_classes = [IsAdminUser]
@@ -43,6 +50,13 @@ class PhongViewSet(viewsets.ModelViewSet):
 
 
 class LichHocViewSet(viewsets.ReadOnlyModelViewSet):
+    """
+    HỆ THỐNG QUẢN LÝ ĐÀO TẠO - THỜI KHÓA BIỂU
+    Chức năng: Tra cứu danh mục lịch học và thời khóa biểu các lớp học phần.
+    """
+    def get_view_name(self):
+        return "Thời Khóa Biểu Học Phần"
+
     serializer_class = LichHocSerializer
     permission_classes = [IsAuthenticated]
 
@@ -55,6 +69,14 @@ class LichHocViewSet(viewsets.ReadOnlyModelViewSet):
 
 
 class AIXepLichView(APIView):
+    """
+    HỆ THỐNG QUẢN LÝ ĐÀO TẠO - PHÒNG GIÁO VỤ
+    Chức năng: Tự động sắp xếp thời khóa biểu và phân bổ phòng học theo thuật toán tối ưu ràng buộc.
+    """
+    def get_view_name(self):
+        # Tiêu đề hiển thị trên giao diện Django
+        return "Lập Thời Khóa Biểu Tự Động"
+
     permission_classes = [IsAdminUser]
 
     def post(self, request):
@@ -67,6 +89,14 @@ class AIXepLichView(APIView):
 
 
 class AIGoiYDangKyView(APIView):
+    """
+    HỆ THỐNG QUẢN LÝ ĐÀO TẠO - CỔNG THÔNG TIN SINH VIÊN
+    Chức năng: Đề xuất tổ hợp học phần tối ưu theo nhu cầu tín chỉ và nguyện vọng của sinh viên.
+    """
+    def get_view_name(self):
+        # Tiêu đề hiển thị trên giao diện Django (Khớp với URL de-xuat-hoc-phan)
+        return "Đề Xuất Lộ Trình Học Phần"
+
     permission_classes = [IsAuthenticated]
 
     def post(self, request):
@@ -89,6 +119,14 @@ class AIGoiYDangKyView(APIView):
 
 
 class AIXacNhanDangKyView(APIView):
+    """
+    HỆ THỐNG QUẢN LÝ ĐÀO TẠO - CỔNG THÔNG TIN SINH VIÊN
+    Chức năng: Kiểm tra tính hợp lệ toàn vẹn và xác nhận đăng ký danh sách học phần vào hệ thống.
+    """
+    def get_view_name(self):
+        # Tiêu đề hiển thị trên giao diện Django (Khớp với URL xac-nhan-hoc-phan)
+        return "Xác Nhận Đăng Ký Học Phần"
+
     permission_classes = [IsAuthenticated]
 
     def post(self, request):

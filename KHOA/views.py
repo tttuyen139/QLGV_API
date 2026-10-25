@@ -1,14 +1,19 @@
 from rest_framework import status
 from rest_framework.views import APIView
-
-from rest_framework import serializers
 from app_quan_ly.responses import success, error, BaseListAPI
 from .services import KhoaService
 from .models import Khoa
 from .serializers import KhoaSerializer
 
-class QuyLuongKhoaAPI(APIView):
-    """Tính quỹ lương của Khoa"""
+
+class ThongKeLuongKhoaAPI(APIView):
+    """
+    HỆ THỐNG QUẢN LÝ ĐÀO TẠO
+
+    """
+    def get_view_name(self):
+        # Tên hiển thị to ở đầu trang giao diện Django
+        return "Thống Kê Thù Lao Giảng Dạy"
 
     def get(self, request, MAKHOA):
         res = KhoaService.tinh_quy_luong_khoa(MAKHOA)
@@ -17,7 +22,10 @@ class QuyLuongKhoaAPI(APIView):
         return success(data=res)
 
 
+
+QuyLuongKhoaAPI = ThongKeLuongKhoaAPI
+
+
 class KhoaListAPI(BaseListAPI):
     queryset = Khoa.objects.all()
     serializer_class = KhoaSerializer
-
