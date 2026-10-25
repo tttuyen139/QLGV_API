@@ -12,7 +12,10 @@ _config.read(BASE_DIR / 'config.ini', encoding='utf-8')
 
 
 def _get(env_name, section, key, default=''):
-    return os.environ.get(env_name) or _config.get(section, key, fallback=default).strip()
+    value = os.environ.get(env_name, '').strip()
+    if value:
+        return value
+    return _config.get(section, key, fallback='').strip() or default
 
 
 # Khóa bảo mật (giá trị mặc định chỉ dùng cho môi trường phát triển)
@@ -25,7 +28,13 @@ ALLOWED_HOSTS = [h.strip() for h in _get('DJANGO_ALLOWED_HOSTS', 'DJANGO', 'allo
 
 # Trợ lý AI (Google Gemini)
 GEMINI_API_KEY = _get('GEMINI_API_KEY', 'GEMINI_API', 'api_key')
+# Also accept the setting name used in deployment instructions.
+if not GEMINI_API_KEY:
+    GEMINI_API_KEY = _get('GEMINI_API_KEY', 'GEMINI_API', 'gemini_api_key')
 GEMINI_MODEL = _get('GEMINI_MODEL', 'GEMINI_API', 'model', 'gemini-3.8-flash')
+GEMINI_FALLBACK_MODEL = _get(
+    'GEMINI_FALLBACK_MODEL', 'GEMINI_API', 'fallback_model', 'gemini-3.5-flash-lite'
+)
 
 # Các ứng dụng được cài đặt
 INSTALLED_APPS = [
