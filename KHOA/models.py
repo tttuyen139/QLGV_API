@@ -11,6 +11,8 @@ class Khoa(models.Model):
     class Meta:
         db_table = 'KHOA'
         managed = False  # SQL chuẩn sở hữu DDL; Django không ALTER 8 bảng BRD.
+        verbose_name = 'Khoa'
+        verbose_name_plural = 'Danh sách khoa'
 
     def __str__(self):
         return str(self.pk)

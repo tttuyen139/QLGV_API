@@ -134,3 +134,7 @@ if os.environ.get('QLGV_DB_ENGINE') == 'mssql':
 
 MIGRATION_MODULES['AI'] = 'AI.canonical_migrations'
 TEST_RUNNER = 'app_quan_ly.test_runner.QLGVTestRunner'
+
+# Sau đăng nhập, entry chọn trang Admin hoặc cổng API học viên.
+LOGIN_URL = "/api-auth/login/"
+LOGIN_REDIRECT_URL = "/"

@@ -1,12 +1,17 @@
 from rest_framework import status
 from rest_framework.views import APIView
-
 from .responses import success, error
 from .services.ai_service import AIService
 
 
 class ChatBotAPI(APIView):
-    """POST: Chatbot AI hỗ trợ Giáo vụ"""
+    """
+    HỆ THỐNG QUẢN LÝ ĐÀO TẠO
+    Chức năng: Hỗ trợ tư vấn, giải đáp thông tin quy chế đào tạo và giáo vụ.
+    """
+    def get_view_name(self):
+        # Đổi tên trên giao diện: không dùng chữ "Chat Bot" hay "Trợ lý AI"
+        return "Tư Vấn Thông Tin Học Vụ"
 
     def post(self, request):
         cau_hoi = request.data.get('cau_hoi')
