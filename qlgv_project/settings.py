@@ -6,7 +6,7 @@ from pathlib import Path
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # Cấu hình bí mật đọc từ biến môi trường, nếu không có thì đọc từ config.ini (không commit file này).
-# Xem config.example.ini để biết các khóa cần khai báo.
+# Xem config.ini để biết các khóa cần khai báo.
 _config = configparser.ConfigParser()
 _config.read(BASE_DIR / 'config.ini', encoding='utf-8')
 
